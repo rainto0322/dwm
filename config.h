@@ -132,8 +132,6 @@ static const Key keys[] = {
     // {MODKEY,                            XK_u,       spawn,
     //     SHCMD("maim --select | xclip -selection clipboard -t image/png")},
 
-
-
     // shift view
     { MODKEY,                           XK_Left,    shiftview,      {.i = -1 } },
     { MODKEY,                           XK_Right,   shiftview,      {.i = +1 } },
@@ -157,13 +155,13 @@ static const Key keys[] = {
     { MODKEY|ShiftMask,                 XK_comma,   tagmon,         {.i = -1 } },
     { MODKEY|ShiftMask,                 XK_period,  tagmon,         {.i = +1 } },
     // 主窗口 +-
-    { MODKEY,                           XK_i,       incnmaster,     {.i = +1 } },
-    { MODKEY,                           XK_d,       incnmaster,     {.i = -1 } },
+    { MODKEY,                           XK_minus,   incnmaster,     {.i = +1 } },
+    { MODKEY,                           XK_equal,   incnmaster,     {.i = -1 } },
     // shift view
     { MODKEY,                           XK_h,       viewtoleft,      {.i = -1 } },
     { MODKEY,                           XK_l,       viewtoright,     {.i = +1 } },
     // set float fullscreen global
-    { MODKEY,                           XK_v,       togglefloating, {0} },
+    { MODKEY,                           XK_m,       togglefloating, {0} },
     { MODKEY,                           XK_f,       togglefullscr,  {0} },
     { MODKEY,                           XK_g,       toggleglobal,   {0} },
     { MODKEY|ShiftMask,                 XK_b,       toggleborder,   {0} },
@@ -175,20 +173,26 @@ static const Key keys[] = {
     // kill window
     { MODKEY,                           XK_q,       killclient,     {0} },
     // hide & restore windows
-    { MODKEY,                           XK_e,       hidewin,        {0} },
-    { MODKEY|ShiftMask,                 XK_e,       restorewin,     {0} },
+    { MODKEY,                           XK_n,       hidewin,        {0} },
+    { MODKEY|ShiftMask,                 XK_n,       restorewin,     {0} },
     // 退出dwm
     { MODKEY,              XK_BackSpace,    quit,            {1} },
+    
+
     { MODKEY|ShiftMask,    XK_BackSpace,    quit,            {0} },
 
-    { MODKEY,   XK_Return,  spawn,  SHCMD("st")},
+    { MODKEY,   XK_Return,  spawn,  SHCMD("kitty")},
     { MODKEY,   XK_c,       spawn,  SHCMD("firefox") },
     { MODKEY,   XK_e,       spawn,  SHCMD("thunar") },
     { MODKEY,   XK_p,       spawn,  SHCMD("rofi -show drun") },
+    { MODKEY,   XK_v,       spawn,  SHCMD("xcolor | xclip -selection clipboard") },
+    { MODKEY,   XK_s,       spawn,  SHCMD("maim --select | xclip -selection clipboard -t image/png | notify-send -r 9527 \"截图成功！\"" ) },
 
     { 0,    XF86XK_AudioLowerVolume,    spawn,  SHCMD("notify-send -r 9527 -h int:value:$(amixer set Master 5%- | tail -n1 | sed -r \"s/.*\\[(.*)%\\].*/\\1/\") -h string:hlcolor:#689d6a \"Volume\"") },
     { 0,    XF86XK_AudioRaiseVolume,    spawn,  SHCMD("notify-send -r 9527 -h int:value:$(amixer set Master 5%+ | tail -n1 | sed -r \"s/.*\\[(.*)%\\].*/\\1/\") -h string:hlcolor:#689d6a \"Volume\"") },
     { 0,    XF86XK_AudioMute,           spawn,  SHCMD("notify-send -r 9527 -h int:value:$(amixer set Master toggle | tail -n1 | sed -r \"s/.*\\[(.*)%\\].*/\\1/\") -h string:hlcolor:#689d6a \"Volume\"") },
+    { 0,    XF86XK_AudioMute,           spawn,  SHCMD("notify-send -r 9527 -h int:value:$(amixer set Master toggle | tail -n1 | sed -r \"s/.*\\[(.*)%\\].*/\\1/\") -h string:hlcolor:#689d6a \"Volume\"") },
+    
     TAGKEYS(XK_y, 0)
     TAGKEYS(XK_u, 1)
     TAGKEYS(XK_i, 2)
@@ -202,7 +206,7 @@ static const Rule rules[] = {
      *	WM_NAME(STRING) = title
      */
     /* class      instance    title       tags mask     isfloating  isglobal   monitor */
-    { "code",     NULL,       NULL,       1 << 0,       0,          0,         0 },
+    { "code",     NULL,       NULL,       0,            0,          0,         0 },
 
 };
 
@@ -213,14 +217,14 @@ static const Button buttons[] = {
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkLtSymbol,          0,              Button3,        cyclelayout,    {.i = +1 } },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-    { ClkStatusText,        0,              Button2,        spawn,          SHCMD("st") },
+    { ClkStatusText,        0,              Button2,        spawn,          SHCMD("kitty") },
 
     /* Keep movemouse? */
     /* { ClkClientWin, MODKEY,       Button1,    movemouse,      {0} }, */
-    { ClkClientWin,    MODKEY,       Button1,    moveorplace,    {.i = 0} },
+    { ClkClientWin,    MODKEY,       Button1,    movemouse,    {.i = 0} },
     { ClkClientWin,    MODKEY,       Button2,    togglefloating, {0} },
     { ClkClientWin,    MODKEY,       Button3,    resizemouse,    {0} },
-    { ClkClientWin,    ControlMask,  Button3,    dragcfact,      {0} },
+    // { ClkClientWin,    ControlMask,  Button3,    dragcfact,      {0} },
     { ClkTagBar,       0,            Button1,    view,           {0} },
     { ClkTagBar,       0,            Button3,    toggleview,     {0} },
     { ClkTagBar,       MODKEY,       Button1,    tag,            {0} },

@@ -4,10 +4,9 @@
 # ^b$var^ = bg color
 
 clock() {
-	printf "$(date '+%H:%M') "
+	printf "$(date '+%H:%M %p') "
 }
 
 while true; do
-
   sleep 1 && xsetroot -name "$updates $(clock)"
 done
